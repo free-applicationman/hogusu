@@ -1,6 +1,6 @@
 "use strict";
 
-const APP_VERSION = "2.0.0";
+const APP_VERSION = "2.0.1";
 const STORAGE_KEY = "hogusu-v2-state";
 const AUDIO_PATH = "./assets/audio/";
 const IMAGE_PATH = "./assets/images/";
