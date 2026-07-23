@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#075b37">
+  <meta name="description" content="音声とヒーリングBGMで行う、毎日約10分の全身セルフストレッチ">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ほぐす">
+  <title>ほぐす｜全身セルフストレッチ</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
+  <link rel="icon" href="./assets/icons/icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">BODY CARE ROUTINE</p>
+        <h1>ほぐす</h1>
+        <span class="version">Ver.2.0.0</span>
+      </div>
+      <button id="settingsButton" class="icon-button" type="button" aria-label="設定を開く">⚙︎</button>
+    </header>
+
+    <section id="homeScreen" class="screen active" aria-labelledby="homeTitle">
+      <article class="hero">
+        <img class="hero-icon" src="./assets/icons/app_icon.png" alt="">
+        <div class="hero-copy">
+          <p class="hero-kicker">毎日約10分</p>
+          <h2 id="homeTitle">全身をゆっくりほぐす。</h2>
+          <p>音声案内とヒーリングBGMに合わせて、15ステップのセルフストレッチを行います。</p>
+          <button id="startCourseButton" class="button button-white button-large" type="button">ストレッチを始める</button>
+        </div>
+
+        <fieldset class="bgm-picker">
+          <legend>BGM</legend>
+          <div class="segmented">
+            <button class="bgm-option selected" type="button" data-bgm="off">OFF</button>
+            <button class="bgm-option" type="button" data-bgm="river">川のせせらぎ</button>
+            <button class="bgm-option" type="button" data-bgm="forest">森の音</button>
+          </div>
+        </fieldset>
+      </article>
+
+      <div class="stats" aria-label="実施記録">
+        <article>
+          <strong id="streakValue">0</strong>
+          <span>連続日数</span>
+        </article>
+        <article>
+          <strong id="monthValue">0</strong>
+          <span>今月</span>
+        </article>
+        <article>
+          <strong id="totalValue">0</strong>
+          <span>累計回数</span>
+        </article>
+      </div>
+
+      <button id="openMenuButton" class="menu-link" type="button">
+        <span class="menu-symbol">☰</span>
+        <span><strong>ストレッチ一覧</strong><small>全15ステップから個別に選べます</small></span>
+        <b>›</b>
+      </button>
+
+      <article class="calendar-card">
+        <div class="calendar-header">
+          <button id="previousMonthButton" type="button" aria-label="前の月">‹</button>
+          <h2 id="calendarMonth">—</h2>
+          <button id="nextMonthButton" type="button" aria-label="次の月">›</button>
+        </div>
+        <div class="calendar-week" aria-hidden="true">
+          <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
+        </div>
+        <div id="calendarGrid" class="calendar-grid"></div>
+        <p class="calendar-note"><span></span>実施した日</p>
+      </article>
+    </section>
+
+    <section id="menuScreen" class="screen" aria-labelledby="menuTitle">
+      <div class="sub-header">
+        <button class="text-button" type="button" data-home>‹ ホーム</button>
+        <h2 id="menuTitle">ストレッチ一覧</h2>
+        <span></span>
+      </div>
+      <p class="section-lead">行いたいストレッチを選ぶと、1種目だけ実行できます。</p>
+      <div id="exerciseList" class="exercise-list"></div>
+    </section>
+
+    <section id="courseScreen" class="screen" aria-labelledby="courseHeading">
+      <div class="course-header">
+        <button id="exitCourseButton" class="text-button" type="button">終了</button>
+        <h2 id="courseHeading">全身コース</h2>
+        <button id="muteButton" class="text-button" type="button">音 ON</button>
+      </div>
+
+      <div class="progress-track" aria-hidden="true"><div id="progressBar"></div></div>
+      <div class="course-meta">
+        <span id="stepCount">1 / 15</span>
+        <span id="totalRemaining">残り 10:00</span>
+      </div>
+
+      <article class="exercise-card">
+        <div class="exercise-heading">
+          <span id="categoryLabel" class="pill"></span>
+          <h2 id="exerciseTitle"></h2>
+          <p id="exerciseSummary"></p>
+        </div>
+
+        <div class="image-stage">
+          <img id="exerciseImage" src="" alt="">
+          <div id="prepareOverlay" class="prepare-overlay" hidden>
+            <span id="prepareLabel">姿勢を確認しましょう</span>
+            <strong id="prepareCount">5</strong>
+          </div>
+        </div>
+
+        <div id="timerRing" class="timer-ring">
+          <div>
+            <span id="timerStatus">準備</span>
+            <strong id="timeValue">30</strong>
+            <small>秒</small>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="previousStepButton" class="button button-secondary" type="button">前へ</button>
+          <button id="pauseButton" class="button button-primary" type="button">開始</button>
+          <button id="nextStepButton" class="button button-secondary" type="button">次へ</button>
+        </div>
+
+        <div class="tip-card">
+          <strong>ポイント</strong>
+          <p id="exerciseTip"></p>
+        </div>
+      </article>
+    </section>
+
+    <section id="completeScreen" class="screen" aria-labelledby="completeTitle">
+      <article class="complete-card">
+        <div class="complete-check">✓</div>
+        <p class="complete-kicker">GOOD ROUTINE</p>
+        <h2 id="completeTitle">お疲れさまでした</h2>
+        <p id="completeMessage">全身をゆっくりほぐせました。</p>
+        <div class="complete-stats">
+          <div><strong id="completeStreak">0</strong><span>連続日数</span></div>
+          <div><strong id="completeTotal">0</strong><span>累計回数</span></div>
+        </div>
+        <button id="completeHomeButton" class="button button-primary button-large" type="button">ホームへ戻る</button>
+      </article>
+    </section>
+  </main>
+
+  <div id="settingsModal" class="modal" aria-hidden="true">
+    <button class="modal-backdrop" type="button" data-close-settings aria-label="設定を閉じる"></button>
+    <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="modal-header">
+        <h2 id="settingsTitle">設定</h2>
+        <button class="icon-button small" type="button" data-close-settings aria-label="設定を閉じる">×</button>
+      </div>
+      <label class="setting-row">
+        <span><strong>音声案内</strong><small>カウント・案内・応援メッセージ</small></span>
+        <input id="voiceEnabledInput" type="checkbox" checked>
+      </label>
+      <label class="setting-column">
+        <span><strong>音声音量</strong><output id="voiceVolumeOutput">75%</output></span>
+        <input id="voiceVolumeInput" type="range" min="0" max="100" value="75">
+      </label>
+      <label class="setting-column">
+        <span><strong>BGM音量</strong><output id="bgmVolumeOutput">16%</output></span>
+        <input id="bgmVolumeInput" type="range" min="0" max="40" value="16">
+      </label>
+      <label class="setting-row">
+        <span><strong>バイブレーション</strong><small>種目が切り替わるときに通知</small></span>
+        <input id="vibrationInput" type="checkbox" checked>
+      </label>
+      <p class="settings-note">記録はこの端末のブラウザ内に保存されます。</p>
+    </section>
+  </div>
+
+  <audio id="bgmAudio" loop preload="none"></audio>
+  <audio id="voiceAudio" preload="auto"></audio>
+  <script src="./app.js" defer></script>
+</body>
+</html>
