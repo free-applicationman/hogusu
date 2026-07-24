@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION = "2.0.3";
+const VERSION = "2.0.4";
 const CORE_CACHE = `hogusu-core-${VERSION}`;
 const MEDIA_CACHE = `hogusu-media-${VERSION}`;
 const CORE_ASSETS = [

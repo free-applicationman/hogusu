@@ -1,6 +1,6 @@
 "use strict";
 
-const APP_VERSION = "2.0.3";
+const APP_VERSION = "2.0.4";
 const STORAGE_KEY = "hogusu-v2-state";
 const AUDIO_PATH = "./assets/audio/";
 const IMAGE_PATH = "./assets/images/";
@@ -363,15 +363,14 @@ function renderExercise() {
   const timerProgress = (remaining / exercise.seconds) * 100;
 
   $("courseHeading").textContent = singleExercise ? "単独ストレッチ" : "全身コース";
-  $("categoryLabel").textContent = exercise.category;
-  $("exerciseTitle").textContent = exercise.title;
-  $("exerciseSummary").textContent = exercise.summary;
   $("exerciseTip").textContent = exercise.tip;
   $("exerciseImage").src = `${IMAGE_PATH}${exercise.image}`;
   $("exerciseImage").alt = `${exercise.title}のやり方`;
   $("timeValue").textContent = remaining;
   $("timerStatus").textContent = preparing ? "準備" : running ? "残り時間" : remaining < exercise.seconds ? "一時停止" : "待機";
-  $("stepCount").textContent = singleExercise ? "単独メニュー" : `${currentIndex + 1} / ${exercises.length}`;
+  $("stepCount").textContent = singleExercise
+    ? exercise.title
+    : `${currentIndex + 1} / ${exercises.length}　${exercise.title}`;
   $("totalRemaining").textContent = `残り ${formatTime(totalActiveRemaining())}`;
   $("progressBar").style.width = `${progress}%`;
   $("timerRing").style.setProperty("--progress", `${timerProgress}%`);
